@@ -481,37 +481,7 @@
 
         // Simulate results (replace with actual API response handling)
         function display(domaininfo) {
-            const isEmail = !domaininfo.is_domain;
-
-            let resultsHTML = '';
-
-            if (isEmail) {
-                resultsHTML = "WE DON't LIKE EMAILS";
-                // resultsHTML = `
-                //     <div style="background: rgba(255,255,255,0.08); border-radius: 8px; padding: 20px; margin-top: 20px;">
-                //         <h3 style="color: var(--accent-color); margin-bottom: 15px;">Email Analysis Results</h3>
-                //         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                //             <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 5px;">
-                //                 <h4 style="margin-bottom: 10px;">Email Validation</h4>
-                //                 <p><span style="color: #2ecc71;">✓</span> Valid format</p>
-                //                 <p><span style="color: #2ecc71;">✓</span> MX records found</p>
-                //                 <p><span style="color: #2ecc71;">✓</span> SMTP check passed</p>
-                //             </div>
-                //             <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 5px;">
-                //                 <h4 style="margin-bottom: 10px;">Risk Assessment</h4>
-                //                 <p><span style="color: #2ecc71;">✓</span> Not a disposable email</p>
-                //                 <p><span style="color: #2ecc71;">✓</span> Not on blacklists</p>
-                //                 <p><span style="color: #e67e22;">!</span> Recent domain creation</p>
-                //             </div>
-                //         </div>
-                //         <div style="margin-top: 20px;">
-                //             <h4 style="margin-bottom: 10px;">Associated Accounts</h4>
-                //             <p>Found 3 accounts associated with this email across the web.</p>
-                //         </div>
-                //     </div>
-                // `;
-            } else {
-                resultsHTML = `
+            resultsHTML = `
     <div style="background: rgba(255,255,255,0.08); 
                 border-radius: 8px; 
                 padding: 20px; 
@@ -529,15 +499,15 @@
                     gap: 15px;">
 `;
 
-                for (const [key, value] of Object.entries(domaininfo)) {
-                    // Skip irrelevant keys
-                    if (key === "status" || key.includes("whois")) continue;
+            for (const [key, value] of Object.entries(domaininfo)) {
+                // Skip irrelevant keys
+                if (key === "status" || key.includes("whois")) continue;
 
-                    if (value) {
-                        if (Array.isArray(value)) {
-                            if (value.some(item => item.includes("whois"))) continue;
-                            // If the value is an array, display each item in a list
-                            resultsHTML += `
+                if (value) {
+                    if (Array.isArray(value)) {
+                        if (value.some(item => item.includes("whois"))) continue;
+                        // If the value is an array, display each item in a list
+                        resultsHTML += `
                 <div style="background: rgba(255,255,255,0.05); 
                             padding: 10px; 
                             border-radius: 4px;">
@@ -546,16 +516,16 @@
                     </p>
                     <ul style="list-style-type: disc; margin-left: 20px;">
             `;
-                            for (const subValue of value) {
-                                resultsHTML += `<li style="margin: 4px 0;">${subValue}</li>`;
-                            }
-                            resultsHTML += `
+                        for (const subValue of value) {
+                            resultsHTML += `<li style="margin: 4px 0;">${subValue}</li>`;
+                        }
+                        resultsHTML += `
                     </ul>
                 </div>
             `;
-                        } else {
-                            // Single-value fields
-                            resultsHTML += `
+                    } else {
+                        // Single-value fields
+                        resultsHTML += `
                 <div style="background: rgba(255,255,255,0.05); 
                             padding: 10px; 
                             border-radius: 4px;">
@@ -565,15 +535,14 @@
                     </p>
                 </div>
             `;
-                        }
                     }
                 }
+            }
 
-                resultsHTML += `
+            resultsHTML += `
         </div>
     </div>
 `;
-            }
 
             resultsDiv.innerHTML = resultsHTML;
             showNotification('Scraping completed successfully!', 'success');

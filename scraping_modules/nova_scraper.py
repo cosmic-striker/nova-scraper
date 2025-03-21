@@ -37,7 +37,7 @@ def filter_emails_by_domain(emails: List[str], domain: str) -> List[str]:
     domain = domain.lower()
     return [email for email in emails if email.lower().endswith("@" + domain)]
 
-def basic_web_scraping(email: str) -> str:
+def basic_web_scraping(email: str) -> dict:
     # Prepare the search URL for the provided email
     url = f"https://www.google.com/search?q={email}+breach"
     headers = {
@@ -70,16 +70,16 @@ def basic_web_scraping(email: str) -> str:
         else:
             result_message += "\n\nNo email addresses detected matching the domain."
         
-        return result_message
+        return {"message": result_message}
     except requests.exceptions.HTTPError as e:
         logging.error(f"HTTP error occurred while fetching search results for {email}: {e}")
-        return f"Failed to retrieve search results. HTTP error: {e}"
+        return {"error": f"Failed to retrieve search results. HTTP error: {e}"}
     except requests.exceptions.RequestException as e:
         logging.error(f"Request exception occurred while fetching search results for {email}: {e}")
-        return f"Error fetching search results: {e}"
+        return {"error": f"Error fetching search results: {e}"}
     except Exception as e:
         logging.error(f"Unexpected error during web scraping for {email}: {e}")
-        return f"Error fetching search results: {e}"
+        return {"error": f"Error fetching search results: {e}"}
 
 # Example usage:
 if __name__ == "__main__":
