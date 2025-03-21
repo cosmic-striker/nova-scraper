@@ -512,33 +512,66 @@
                 // `;
             } else {
                 resultsHTML = `
-                    <div style="background: rgba(255,255,255,0.08); border-radius: 8px; padding: 20px; margin-top: 20px;">
-                        <h3 style="color: var(--accent-color); margin-bottom: 15px;">Domain Intelligence Results</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 5px;">
-                                <h4 style="margin-bottom: 10px;">Domain Information</h4>
-                                <p>Registrar: ${domaininfo.registrar}</p>
-                                <p>Creation Date: ${domaininfo.creation_date}</p>
-                                <p>Expiration Date: ${domaininfo.expiration_date}</p>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 5px;">
-                                <h4 style="margin-bottom: 10px;">Server Details</h4>
-                                <p>Organization: ${domaininfo.organization}</p>
-                                <p>Location: ${domaininfo.state}, ${domaininfo.country}</p>
-                                <p>Name Servers: ${domaininfo.name_servers}</p>
-                            </div>
-                        </div>
-                        <div style="margin-top: 20px;">
-                            <h4 style="margin-bottom: 10px;">Technology Stack</h4>
-                            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                                <span style="background: rgba(255,102,0,0.2); color: var(--accent-color); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">WordPress</span>
-                                <span style="background: rgba(255,102,0,0.2); color: var(--accent-color); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">PHP</span>
-                                <span style="background: rgba(255,102,0,0.2); color: var(--accent-color); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">MySQL</span>
-                                <span style="background: rgba(255,102,0,0.2); color: var(--accent-color); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">Google Analytics</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
+    <div style="background: rgba(255,255,255,0.08); 
+                border-radius: 8px; 
+                padding: 20px; 
+                margin-top: 20px; 
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+                border: 1px solid rgba(255,255,255,0.2);">
+        <h3 style="color: var(--accent-color); 
+                   margin-bottom: 15px; 
+                   border-bottom: 1px solid rgba(255,255,255,0.3); 
+                   padding-bottom: 5px;">
+            Domain Scrap Result
+        </h3>
+        <div style="display: grid; 
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+                    gap: 15px;">
+`;
+
+                for (const [key, value] of Object.entries(domaininfo)) {
+                    // Skip irrelevant keys
+                    if (key === "is_domain" || key === "status" || key.includes("whois")) continue;
+
+                    if (value) {
+                        if (Array.isArray(value)) {
+                            // If the value is an array, display each item in a list
+                            resultsHTML += `
+                <div style="background: rgba(255,255,255,0.05); 
+                            padding: 10px; 
+                            border-radius: 4px;">
+                    <p style="font-weight: bold; margin-bottom: 5px;">
+                        ${convertSnakeToTitle(key)}:
+                    </p>
+                    <ul style="list-style-type: disc; margin-left: 20px;">
+            `;
+                            for (const subValue of value) {
+                                resultsHTML += `<li style="margin: 4px 0;">${subValue}</li>`;
+                            }
+                            resultsHTML += `
+                    </ul>
+                </div>
+            `;
+                        } else {
+                            // Single-value fields
+                            resultsHTML += `
+                <div style="background: rgba(255,255,255,0.05); 
+                            padding: 10px; 
+                            border-radius: 4px;">
+                    <p style="font-weight: bold; margin: 0;">
+                        ${convertSnakeToTitle(key)}:
+                        <span style="font-weight: normal;">${value}</span>
+                    </p>
+                </div>
+            `;
+                        }
+                    }
+                }
+
+                resultsHTML += `
+        </div>
+    </div>
+`;
             }
 
             resultsDiv.innerHTML = resultsHTML;
@@ -605,7 +638,7 @@
             }
 
             typeWriter();
-        }); 
+        });
     </script>
 </body>
 
