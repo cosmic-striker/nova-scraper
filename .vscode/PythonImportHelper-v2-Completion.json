@@ -1,0 +1,157 @@
+[
+    {
+        "label": "whois",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "whois",
+        "description": "whois",
+        "detail": "whois",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "whois_lookup",
+        "importPath": "scraping_modules.nova_scraper",
+        "description": "scraping_modules.nova_scraper",
+        "isExtraImport": true,
+        "detail": "scraping_modules.nova_scraper",
+        "documentation": {}
+    },
+    {
+        "label": "basic_web_scraping",
+        "importPath": "scraping_modules.nova_scraper",
+        "description": "scraping_modules.nova_scraper",
+        "isExtraImport": true,
+        "detail": "scraping_modules.nova_scraper",
+        "documentation": {}
+    },
+    {
+        "label": "whois_lookup",
+        "kind": 2,
+        "importPath": "scraping_modules.nova_scraper",
+        "description": "scraping_modules.nova_scraper",
+        "peekOfCode": "def whois_lookup(domain: str) -> str:\n    try:\n        domain_info = whois.whois(domain)\n        if domain_info:\n            info_parts = [\n                f\"Domain Name: {domain_info.domain_name}\",\n                f\"Registrar: {domain_info.registrar}\",\n                f\"Creation Date: {domain_info.creation_date}\",\n                f\"Expiration Date: {domain_info.expiration_date}\",\n                f\"Name Servers: {domain_info.name_servers}\"",
+        "detail": "scraping_modules.nova_scraper",
+        "documentation": {}
+    },
+    {
+        "label": "extract_emails",
+        "kind": 2,
+        "importPath": "scraping_modules.nova_scraper",
+        "description": "scraping_modules.nova_scraper",
+        "peekOfCode": "def extract_emails(text: str) -> List[str]:\n    \"\"\"\n    Extract email addresses from a given text using regex.\n    \"\"\"\n    email_pattern = r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+'\n    emails = re.findall(email_pattern, text)\n    return list(set(emails))  # Remove duplicates\ndef filter_emails_by_domain(emails: List[str], domain: str) -> List[str]:\n    \"\"\"\n    Filter a list of emails to only include those ending with the specified domain.",
+        "detail": "scraping_modules.nova_scraper",
+        "documentation": {}
+    },
+    {
+        "label": "filter_emails_by_domain",
+        "kind": 2,
+        "importPath": "scraping_modules.nova_scraper",
+        "description": "scraping_modules.nova_scraper",
+        "peekOfCode": "def filter_emails_by_domain(emails: List[str], domain: str) -> List[str]:\n    \"\"\"\n    Filter a list of emails to only include those ending with the specified domain.\n    \"\"\"\n    domain = domain.lower()\n    return [email for email in emails if email.lower().endswith(\"@\" + domain)]\ndef basic_web_scraping(email: str) -> str:\n    # Prepare the search URL for the provided email\n    url = f\"https://www.google.com/search?q={email}+breach\"\n    headers = {",
+        "detail": "scraping_modules.nova_scraper",
+        "documentation": {}
+    },
+    {
+        "label": "basic_web_scraping",
+        "kind": 2,
+        "importPath": "scraping_modules.nova_scraper",
+        "description": "scraping_modules.nova_scraper",
+        "peekOfCode": "def basic_web_scraping(email: str) -> str:\n    # Prepare the search URL for the provided email\n    url = f\"https://www.google.com/search?q={email}+breach\"\n    headers = {\n        \"User-Agent\": (\n            \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) \"\n            \"AppleWebKit/537.36 (KHTML, like Gecko) \"\n            \"Chrome/91.0.4472.124 Safari/537.36\"\n        )\n    }",
+        "detail": "scraping_modules.nova_scraper",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def home():\n    return render_template('index.html')\n@app.route('/scrape', methods=['POST'])\ndef scrape():\n    target = request.form['target']\n    # Check if input is an email (basic web scraping) or a domain (WHOIS lookup)\n    if '@' in target:\n        result = basic_web_scraping(target)\n    else:\n        result = whois_lookup(target)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "scrape",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def scrape():\n    target = request.form['target']\n    # Check if input is an email (basic web scraping) or a domain (WHOIS lookup)\n    if '@' in target:\n        result = basic_web_scraping(target)\n    else:\n        result = whois_lookup(target)\n    return render_template('result.html', result=result)\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/')\ndef home():\n    return render_template('index.html')\n@app.route('/scrape', methods=['POST'])\ndef scrape():\n    target = request.form['target']\n    # Check if input is an email (basic web scraping) or a domain (WHOIS lookup)\n    if '@' in target:\n        result = basic_web_scraping(target)",
+        "detail": "app",
+        "documentation": {}
+    }
+]
