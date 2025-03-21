@@ -531,10 +531,11 @@
 
                 for (const [key, value] of Object.entries(domaininfo)) {
                     // Skip irrelevant keys
-                    if (key === "is_domain" || key === "status" || key.includes("whois")) continue;
+                    if (key === "status" || key.includes("whois")) continue;
 
                     if (value) {
                         if (Array.isArray(value)) {
+                            if (value.some(item => item.includes("whois"))) continue;
                             // If the value is an array, display each item in a list
                             resultsHTML += `
                 <div style="background: rgba(255,255,255,0.05); 

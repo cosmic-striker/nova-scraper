@@ -11,7 +11,6 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 def whois_lookup(domain: str) -> dict:
     try:
         domain_info = whois.whois(domain)
-        domain_info["is_domain"] = True
         if domain_info:
             return domain_info
         else:
