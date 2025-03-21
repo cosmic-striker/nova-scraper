@@ -505,7 +505,7 @@
 
                 if (value) {
                     if (Array.isArray(value)) {
-                        if (value.some(item => item.includes("whois"))) continue;
+                        if (value.some(item => item.toLowerCase().includes("whois"))) continue;
                         // If the value is an array, display each item in a list
                         resultsHTML += `
                 <div style="background: rgba(255,255,255,0.05); 
@@ -524,6 +524,7 @@
                 </div>
             `;
                     } else {
+                        if (value.toLowerCase().includes("whois")) continue;
                         // Single-value fields
                         resultsHTML += `
                 <div style="background: rgba(255,255,255,0.05); 
