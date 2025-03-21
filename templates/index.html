@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -242,8 +243,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .notification {
@@ -298,7 +304,8 @@
                 flex-direction: column;
             }
 
-            input, button {
+            input,
+            button {
                 width: 100%;
                 border-radius: 8px;
             }
@@ -316,11 +323,13 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="header-content">
             <div class="logo">
-                <img src="/static/nova_logo.png" alt="NOVA Scraper" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmY2NjAwIiBzdHJva2Utd2lkdGg9IjUiLz48cGF0aCBkPSJNMjUgNTAgTDQ1IDMwIEw3NSA3MCIgc3Ryb2tlPSIjZmY2NjAwIiBzdHJva2Utd2lkdGg9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg=='">
+                <img src="/static/nova_logo.png" alt="NOVA Scraper"
+                    onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmY2NjAwIiBzdHJva2Utd2lkdGg9IjUiLz48cGF0aCBkPSJNMjUgNTAgTDQ1IDMwIEw3NSA3MCIgc3Ryb2tlPSIjZmY2NjAwIiBzdHJva2Utd2lkdGg9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg=='">
             </div>
             <h1>NOVA SCRAPER</h1>
         </div>
@@ -333,9 +342,11 @@
                 <div class="form-group">
                     <label for="target">Enter Domain or Email Address:</label>
                     <div class="input-container">
-                        <input type="text" id="target" name="target" placeholder="example.com or user@example.com" required>
+                        <input type="text" id="target" name="target" placeholder="example.com or user@example.com"
+                            required>
                         <button type="submit">
-                            <svg style="width:20px; height:20px; margin-right:8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg style="width:20px; height:20px; margin-right:8px;" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
@@ -351,32 +362,40 @@
         <div class="features">
             <div class="feature-item">
                 <div class="feature-icon">
-                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff6600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff6600" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
                 </div>
                 <h3 class="feature-title">Domain Intelligence</h3>
-                <p class="feature-text">Get detailed information about any domain including DNS records, hosting details, and technology stack.</p>
+                <p class="feature-text">Get detailed information about any domain including DNS records, hosting
+                    details, and technology stack.</p>
             </div>
             <div class="feature-item">
                 <div class="feature-icon">
-                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff6600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff6600" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                         <polyline points="22,6 12,13 2,6"></polyline>
                     </svg>
                 </div>
                 <h3 class="feature-title">Email Analysis</h3>
-                <p class="feature-text">Validate emails, detect disposable addresses, and find associated accounts across the web.</p>
+                <p class="feature-text">Validate emails, detect disposable addresses, and find associated accounts
+                    across the web.</p>
             </div>
             <div class="feature-item">
                 <div class="feature-icon">
-                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff6600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff6600" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                        </polygon>
                     </svg>
                 </div>
                 <h3 class="feature-title">Advanced Reports</h3>
-                <p class="feature-text">Generate comprehensive reports with visualizations and export them in multiple formats.</p>
+                <p class="feature-text">Generate comprehensive reports with visualizations and export them in multiple
+                    formats.</p>
             </div>
         </div>
     </div>
@@ -404,17 +423,17 @@
         const notification = document.getElementById('notification');
 
         // Form validation and submission
-        form.addEventListener('submit', async function(event) {
+        form.addEventListener('submit', async function (event) {
             event.preventDefault();
-            
+
             const targetValue = targetInput.value.trim();
-            
+
             // Basic validation
             if (!isValidInput(targetValue)) {
                 showNotification('Please enter a valid domain or email address', 'error');
                 return;
             }
-            
+
             // Show loader
             loader.style.display = 'block';
             resultsDiv.innerHTML = '';
@@ -433,6 +452,7 @@
                 console.error('Error:', error);
                 showNotification('An error occurred. Please try again later.', 'error');
             }
+            loader.style.display = 'none';
         });
 
         // Validate input
@@ -440,7 +460,7 @@
             // Simple validation for domains and emails
             const domainRegex = /^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
             const emailRegex = /^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
-            
+
             return domainRegex.test(input) || emailRegex.test(input);
         }
 
@@ -448,7 +468,7 @@
         function showNotification(message, type) {
             notification.textContent = message;
             notification.className = 'notification ' + type + ' show';
-            
+
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
@@ -459,7 +479,7 @@
             const isEmail = !domaininfo.is_domain;
 
             let resultsHTML = '';
-            
+
             if (isEmail) {
                 resultsHTML = "WE DON't LIKE EMAILS";
                 // resultsHTML = `
@@ -515,13 +535,13 @@
                     </div>
                 `;
             }
-            
+
             resultsDiv.innerHTML = resultsHTML;
             showNotification('Scraping completed successfully!', 'success');
         }
 
         // Input validation on blur
-        targetInput.addEventListener('blur', function() {
+        targetInput.addEventListener('blur', function () {
             const targetValue = targetInput.value.trim();
             if (targetValue && !isValidInput(targetValue)) {
                 targetInput.style.boxShadow = 'inset 0 0 5px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(231, 76, 60, 0.3)';
@@ -536,9 +556,9 @@
         }
 
         // Document ready
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // You could add any initialization code here
-            
+
             // Fallback logo if server logo not found (already handled with onerror in the HTML)
 
             // Add typewriter effect to the placeholder
@@ -548,15 +568,15 @@
                 "company.org",
                 "info@business.net"
             ];
-            
+
             let currentPlaceholder = 0;
             let charIndex = 0;
             let isDeleting = false;
             let typingSpeed = 100;
-            
+
             function typeWriter() {
                 const currentText = placeholders[currentPlaceholder];
-                
+
                 if (isDeleting) {
                     targetInput.setAttribute('placeholder', currentText.substring(0, charIndex - 1));
                     charIndex--;
@@ -566,7 +586,7 @@
                     charIndex++;
                     typingSpeed = 100;
                 }
-                
+
                 if (!isDeleting && charIndex === currentText.length) {
                     isDeleting = true;
                     typingSpeed = 1000; // Pause at the end
@@ -575,12 +595,13 @@
                     currentPlaceholder = (currentPlaceholder + 1) % placeholders.length;
                     typingSpeed = 500; // Pause before typing next
                 }
-                
+
                 setTimeout(typeWriter, typingSpeed);
             }
-            
+
             typeWriter();
         }); 
     </script>
 </body>
+
 </html>
