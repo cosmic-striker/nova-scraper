@@ -4,26 +4,583 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOVA Scraper</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #ff6600;
+            --accent-hover: #ff3300;
+            --text-color: #ecf0f1;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --input-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #141e30 0%, #243b55 50%, #1a2a3d 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1.2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            margin-right: 15px;
+            filter: drop-shadow(0 0 8px rgba(255, 102, 0, 0.7));
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #ff6600, #ff9966);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 102, 0, 0.3);
+        }
+
+        .container {
+            flex: 1;
+            padding: 3rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .input-container {
+            position: relative;
+            display: flex;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px 0 0 8px;
+            background: var(--input-bg);
+            color: #333;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        input:focus {
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(255, 102, 0, 0.3);
+        }
+
+        input::placeholder {
+            color: #999;
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            background: var(--accent-color);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+        }
+
+        button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 102, 0, 0.4);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button i {
+            margin-right: 8px;
+        }
+
+        .features {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+        }
+
+        .feature-text {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-color);
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .loader {
+            display: none;
+            margin: 2rem auto;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 5px solid var(--accent-color);
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .notification.error {
+            background-color: #e74c3c;
+        }
+
+        .notification.success {
+            background-color: #2ecc71;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+
+            .logo img {
+                height: 50px;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .input-container {
+                flex-direction: column;
+            }
+
+            input, button {
+                width: 100%;
+                border-radius: 8px;
+            }
+
+            button {
+                margin-top: 10px;
+            }
+        }
+
+        /* Dark mode preference */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --input-bg: rgba(255, 255, 255, 0.85);
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <div class="logo">
-            <img src="/static/nova_logo.png" alt="NOVA Scraper">
+        <div class="header-content">
+            <div class="logo">
+                <img src="/static/nova_logo.png" alt="NOVA Scraper" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmY2NjAwIiBzdHJva2Utd2lkdGg9IjUiLz48cGF0aCBkPSJNMjUgNTAgTDQ1IDMwIEw3NSA3MCIgc3Ryb2tlPSIjZmY2NjAwIiBzdHJva2Utd2lkdGg9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg=='">
+            </div>
+            <h1>NOVA SCRAPER</h1>
         </div>
-        <h1>NOVA Scraper</h1>
     </header>
 
     <div class="container">
-        <form action="/scrape" method="POST">
-            <label for="target">Enter Domain/Email:</label>
-            <input type="text" id="target" name="target" placeholder="example.com or email@example.com" required>
-            <button type="submit">Start Scraping</button>
-        </form>
+        <div class="card">
+            <h2 class="form-title">Domain & Email Intelligence</h2>
+            <form id="scraper-form">
+                <div class="form-group">
+                    <label for="target">Enter Domain or Email Address:</label>
+                    <div class="input-container">
+                        <input type="text" id="target" name="target" placeholder="example.com or user@example.com" required>
+                        <button type="submit">
+                            <svg style="width:20px; height:20px; margin-right:8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            Start Scraping
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div id="loader" class="loader"></div>
+            <div id="results"></div>
+        </div>
+
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff6600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Domain Intelligence</h3>
+                <p class="feature-text">Get detailed information about any domain including DNS records, hosting details, and technology stack.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff6600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Email Analysis</h3>
+                <p class="feature-text">Validate emails, detect disposable addresses, and find associated accounts across the web.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff6600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Advanced Reports</h3>
+                <p class="feature-text">Generate comprehensive reports with visualizations and export them in multiple formats.</p>
+            </div>
+        </div>
     </div>
 
+    <div id="notification" class="notification"></div>
+
     <footer>
-        <p>&copy; 2024 NOVA Scraper. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+            </div>
+            <p class="copyright">&copy; 2024 NOVA Scraper. All rights reserved.</p>
+        </div>
     </footer>
+
+    <script>
+        // DOM Elements
+        const form = document.getElementById('scraper-form');
+        const targetInput = document.getElementById('target');
+        const loader = document.getElementById('loader');
+        const resultsDiv = document.getElementById('results');
+        const notification = document.getElementById('notification');
+
+        // Form validation and submission
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const targetValue = targetInput.value.trim();
+            
+            // Basic validation
+            if (!isValidInput(targetValue)) {
+                showNotification('Please enter a valid domain or email address', 'error');
+                return;
+            }
+            
+            // Show loader
+            loader.style.display = 'block';
+            resultsDiv.innerHTML = '';
+
+            try {
+                let form = new FormData();
+                form.append('target', targetValue);
+                let response = await fetch('/scrape', {
+                    method: 'POST',
+                    body: form
+                });
+                let domaininfo = await response.json();
+                console.log(domaininfo);
+                display(domaininfo);
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('An error occurred. Please try again later.', 'error');
+            }
+        });
+
+        // Validate input
+        function isValidInput(input) {
+            // Simple validation for domains and emails
+            const domainRegex = /^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
+            
+            return domainRegex.test(input) || emailRegex.test(input);
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            notification.textContent = message;
+            notification.className = 'notification ' + type + ' show';
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Simulate results (replace with actual API response handling)
+        function display(domaininfo) {
+            const isEmail = !domaininfo.is_domain;
+
+            let resultsHTML = '';
+            
+            if (isEmail) {
+                resultsHTML = "WE DON't LIKE EMAILS";
+                // resultsHTML = `
+                //     <div style="background: rgba(255,255,255,0.08); border-radius: 8px; padding: 20px; margin-top: 20px;">
+                //         <h3 style="color: var(--accent-color); margin-bottom: 15px;">Email Analysis Results</h3>
+                //         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                //             <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 5px;">
+                //                 <h4 style="margin-bottom: 10px;">Email Validation</h4>
+                //                 <p><span style="color: #2ecc71;">✓</span> Valid format</p>
+                //                 <p><span style="color: #2ecc71;">✓</span> MX records found</p>
+                //                 <p><span style="color: #2ecc71;">✓</span> SMTP check passed</p>
+                //             </div>
+                //             <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 5px;">
+                //                 <h4 style="margin-bottom: 10px;">Risk Assessment</h4>
+                //                 <p><span style="color: #2ecc71;">✓</span> Not a disposable email</p>
+                //                 <p><span style="color: #2ecc71;">✓</span> Not on blacklists</p>
+                //                 <p><span style="color: #e67e22;">!</span> Recent domain creation</p>
+                //             </div>
+                //         </div>
+                //         <div style="margin-top: 20px;">
+                //             <h4 style="margin-bottom: 10px;">Associated Accounts</h4>
+                //             <p>Found 3 accounts associated with this email across the web.</p>
+                //         </div>
+                //     </div>
+                // `;
+            } else {
+                resultsHTML = `
+                    <div style="background: rgba(255,255,255,0.08); border-radius: 8px; padding: 20px; margin-top: 20px;">
+                        <h3 style="color: var(--accent-color); margin-bottom: 15px;">Domain Intelligence Results</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 5px;">
+                                <h4 style="margin-bottom: 10px;">Domain Information</h4>
+                                <p>Registrar: ${domaininfo.registrar}</p>
+                                <p>Creation Date: ${domaininfo.creation_date}</p>
+                                <p>Expiration Date: ${domaininfo.expiration_date}</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 5px;">
+                                <h4 style="margin-bottom: 10px;">Server Details</h4>
+                                <p>Organization: ${domaininfo.organization}</p>
+                                <p>Location: ${domaininfo.state}, ${domaininfo.country}</p>
+                                <p>Name Servers: ${domaininfo.name_servers}</p>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <h4 style="margin-bottom: 10px;">Technology Stack</h4>
+                            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                <span style="background: rgba(255,102,0,0.2); color: var(--accent-color); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">WordPress</span>
+                                <span style="background: rgba(255,102,0,0.2); color: var(--accent-color); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">PHP</span>
+                                <span style="background: rgba(255,102,0,0.2); color: var(--accent-color); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">MySQL</span>
+                                <span style="background: rgba(255,102,0,0.2); color: var(--accent-color); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">Google Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            resultsDiv.innerHTML = resultsHTML;
+            showNotification('Scraping completed successfully!', 'success');
+        }
+
+        // Input validation on blur
+        targetInput.addEventListener('blur', function() {
+            const targetValue = targetInput.value.trim();
+            if (targetValue && !isValidInput(targetValue)) {
+                targetInput.style.boxShadow = 'inset 0 0 5px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(231, 76, 60, 0.3)';
+            } else {
+                targetInput.style.boxShadow = 'inset 0 0 5px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Dark mode toggle (optional feature)
+        function toggleDarkMode() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        // Document ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // You could add any initialization code here
+            
+            // Fallback logo if server logo not found (already handled with onerror in the HTML)
+
+            // Add typewriter effect to the placeholder
+            const placeholders = [
+                "example.com",
+                "user@example.com",
+                "company.org",
+                "info@business.net"
+            ];
+            
+            let currentPlaceholder = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typingSpeed = 100;
+            
+            function typeWriter() {
+                const currentText = placeholders[currentPlaceholder];
+                
+                if (isDeleting) {
+                    targetInput.setAttribute('placeholder', currentText.substring(0, charIndex - 1));
+                    charIndex--;
+                    typingSpeed = 50;
+                } else {
+                    targetInput.setAttribute('placeholder', currentText.substring(0, charIndex + 1));
+                    charIndex++;
+                    typingSpeed = 100;
+                }
+                
+                if (!isDeleting && charIndex === currentText.length) {
+                    isDeleting = true;
+                    typingSpeed = 1000; // Pause at the end
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    currentPlaceholder = (currentPlaceholder + 1) % placeholders.length;
+                    typingSpeed = 500; // Pause before typing next
+                }
+                
+                setTimeout(typeWriter, typingSpeed);
+            }
+            
+            typeWriter();
+        }); 
+    </script>
 </body>
 </html>

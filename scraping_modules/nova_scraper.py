@@ -8,31 +8,20 @@ from typing import List
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def whois_lookup(domain: str) -> str:
+def whois_lookup(domain: str) -> dict:
     try:
         domain_info = whois.whois(domain)
+        domain_info["is_domain"] = True
         if domain_info:
-            info_parts = [
-                f"Domain Name: {domain_info.domain_name}",
-                f"Registrar: {domain_info.registrar}",
-                f"Creation Date: {domain_info.creation_date}",
-                f"Expiration Date: {domain_info.expiration_date}",
-                f"Name Servers: {domain_info.name_servers}"
-            ]
-            # Add more details if available
-            if hasattr(domain_info, 'emails') and domain_info.emails:
-                info_parts.append(f"Contact Emails: {domain_info.emails}")
-            if hasattr(domain_info, 'status') and domain_info.status:
-                info_parts.append(f"Status: {domain_info.status}")
-            return "\n".join(info_parts)
+            return domain_info
         else:
-            return "No WHOIS information found."
+            return {"error": "No WHOIS information found."}
     except whois.parser.PywhoisError as e:
         logging.error(f"WHOIS lookup failed for domain {domain}: {e}")
-        return f"Error fetching domain info: {e}"
+        return {"error": f"Error fetching domain info: {e}"}
     except Exception as e:
         logging.error(f"Unexpected error during WHOIS lookup for domain {domain}: {e}")
-        return f"Error fetching domain info: {e}"
+        return {"error": f"Error fetching domain info: {e}"}
 
 def extract_emails(text: str) -> List[str]:
     """

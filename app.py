@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from scraping_modules.nova_scraper import whois_lookup, basic_web_scraping
 
 app = Flask(__name__)
@@ -16,8 +16,7 @@ def scrape():
         result = basic_web_scraping(target)
     else:
         result = whois_lookup(target)
-    
-    return render_template('result.html', result=result)
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)

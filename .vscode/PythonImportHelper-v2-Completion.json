@@ -76,6 +76,14 @@
         "documentation": {}
     },
     {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "whois_lookup",
         "importPath": "scraping_modules.nova_scraper",
         "description": "scraping_modules.nova_scraper",
@@ -96,7 +104,7 @@
         "kind": 2,
         "importPath": "scraping_modules.nova_scraper",
         "description": "scraping_modules.nova_scraper",
-        "peekOfCode": "def whois_lookup(domain: str) -> str:\n    try:\n        domain_info = whois.whois(domain)\n        if domain_info:\n            info_parts = [\n                f\"Domain Name: {domain_info.domain_name}\",\n                f\"Registrar: {domain_info.registrar}\",\n                f\"Creation Date: {domain_info.creation_date}\",\n                f\"Expiration Date: {domain_info.expiration_date}\",\n                f\"Name Servers: {domain_info.name_servers}\"",
+        "peekOfCode": "def whois_lookup(domain: str) -> dict:\n    try:\n        domain_info = whois.whois(domain)\n        domain_info[\"is_domain\"] = True\n        if domain_info:\n            return domain_info\n        else:\n            return {\"error\": \"No WHOIS information found.\"}\n    except whois.parser.PywhoisError as e:\n        logging.error(f\"WHOIS lookup failed for domain {domain}: {e}\")",
         "detail": "scraping_modules.nova_scraper",
         "documentation": {}
     },
@@ -141,7 +149,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def scrape():\n    target = request.form['target']\n    # Check if input is an email (basic web scraping) or a domain (WHOIS lookup)\n    if '@' in target:\n        result = basic_web_scraping(target)\n    else:\n        result = whois_lookup(target)\n    return render_template('result.html', result=result)\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "peekOfCode": "def scrape():\n    target = request.form['target']\n    # Check if input is an email (basic web scraping) or a domain (WHOIS lookup)\n    if '@' in target:\n        result = basic_web_scraping(target)\n    else:\n        result = whois_lookup(target)\n    return jsonify(result)\nif __name__ == '__main__':\n    app.run(debug=True)",
         "detail": "app",
         "documentation": {}
     },
