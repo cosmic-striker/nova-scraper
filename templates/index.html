@@ -455,6 +455,11 @@
             loader.style.display = 'none';
         });
 
+        function convertSnakeToTitle(str) {
+            const words = str.split('_').filter(Boolean);
+            return words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+        }
+
         // Validate input
         function isValidInput(input) {
             // Simple validation for domains and emails
